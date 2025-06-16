@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Viewer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .image-display {
+            margin-top: 20px;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            max-height: 1000px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Metal WT Conversion</a>
+        <a href="MZ.html">MZ</a>
+        <a href="CVD.html">CVD</a>
+        <a href="Natural.html">Natural</a>
+        <a href="1K.html">1K+ CVD</a>
+  <a href="CAD.html">CAD</a>
+      </nav>
+    <div class="container">
+        <h1 class="text-center">Image Viewer</h1>
+        <div class="mb-3">
+            <label for="imageSku" class="form-label">Enter Image SKU:</label>
+            <input type="text" id="imageSku" class="form-control" placeholder="e.g., image1">
+        </div>
+        <button id="openImage" class="btn btn-primary">Open</button>
+        <div class="image-display" id="imageDisplay">
+            <!-- Image will be displayed here -->
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        function loadImage() {
+            const sku = $('#imageSku').val().trim();
+            if (sku) {
+                const imagePath = `image/${sku}.jpg`; // Adjusted to relative path
+                $('#imageDisplay').html(`<img id="loadedImage" src="${imagePath}" alt="Image loading...">`);
+
+                $('#loadedImage').on('error', function () {
+                    $('#imageDisplay').html(`<p class="text-danger">Image not found. Please check the SKU or ensure the image exists in the 'image' folder.</p>`);
+                });
+            } else {
+                alert('Please enter a valid image SKU.');
+            }
+        }
+
+        $('#openImage').click(loadImage);
+
+        $('#imageSku').keydown(function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission or page reload
+                loadImage();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

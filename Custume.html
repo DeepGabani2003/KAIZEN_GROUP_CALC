@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jewelry Cost Calculator</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        background: linear-gradient(135deg, #f8f9fa, #dfe4ea);
+        padding-bottom: 20px;
+      }
+      h1 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #000000;
+        font-size: 2.5em;
+      }
+      .container {
+        background-color: #ffffff;
+        padding: 30px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        margin-top: 40px;
+      }
+      .form-group label {
+        font-weight: bold;
+        color: #333;
+      }
+      .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        width: 100%;
+        font-size: 1.2em;
+        padding: 12px;
+      }
+      .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
+      #result h2 {
+        margin-top: 30px;
+        text-align: center;
+        color: #28a745;
+        font-size: 1.8em;
+      }
+      #result table {
+        margin-top: 20px;
+      }
+      .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+      }
+      footer {
+        text-align: center;
+        margin-top: 40px;
+        color: #6c757d;
+      }
+      .transition {
+        transition: all 0.3s ease;
+      }
+      .rate-update {
+        width: 100%;
+        margin-top: 30px;
+      }
+      .rate-update input {
+        margin-bottom: 10px;
+      }
+      .container button {
+        width: 100%;
+        padding: 12px;
+        background-color: #d4af37;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+      .flex {
+        gap: 40px;
+        display: flex;
+        align-items: start;
+        justify-content: center;
+      }
+      .width {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Metal WT Conversion</a>
+      <a href="MZ.html">MZ</a>
+      <a href="CVD.html">CVD</a>
+      <a href="Natural.html">Natural</a>
+      <a href="Custume">Custume</a>
+      <a href="CAD.html">CAD</a>
+    </nav>
+    <div class="container transition">
+      <h1>
+        KAIZEN ewels<br />
+        CVD Cost Calculator
+      </h1>
+      <div class="flex">
+        <div class="width">
+          <form id="jewelryForm">
+            <div class="form-group text-center"></div>
+            <div class="form-group">
+              <label for="metalWeight">Metal Weight (grams):</label>
+              <input
+                type="number"
+                step="0.01"
+                class="form-control"
+                id="metalWeight"
+                value="0"
+              />
+            </div>
+            <div class="form-group">
+              <label for="diamond0_80">0 To 0.90 CT Round</label>
+              <input
+                type="number"
+                step="0.01"
+                class="form-control"
+                id="diamond0_80"
+                value="0"
+              />
+            </div>
+            <div class="form-group">
+              <label for="diamond0_1_round_4">0 TO 1 CT</label>
+              <input
+                type="number"
+                step="0.01"
+                class="form-control"
+                id="diamond0_1_round_4"
+                value="0"
+              />
+            </div>
+            <div class="form-group">
+              <label for="diamond1_25">1 TO 2 CT</label>
+              <input
+                type="number"
+                step="0.01"
+                class="form-control"
+                id="diamond1_25"
+                value="0"
+              />
+            </div>
+            <div class="form-group">
+              <label for="diamond2">2 TO 3 CT</label>
+              <input
+                type="number"
+                step="0.01"
+                class="form-control"
+                id="diamond2"
+                value="0"
+              />
+            </div>
+            <div class="form-group">
+              <label for="diamond2_3">3 TO 4 CT</label>
+              <input
+                type="number"
+                step="0.01"
+                class="form-control"
+                id="diamond2_3"
+                value="0"
+              />
+            </div>
+            <div class="form-group">
+              <label for="diamond3_1">4 TO 5 CT</label>
+              <input
+                type="number"
+                step="0.01"
+                class="form-control"
+                id="diamond3_1"
+                value="0"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Calculate</button>
+          </form>
+        </div>
+
+        <div class="rate-update">
+          <h3>Update Rates</h3>
+          <div class="form-group">
+            <label for="rate0_80">Rate for 0 To 0.90 CT Round:</label>
+            <input
+              type="number"
+              class="form-control"
+              id="rate0_80"
+              value="10000"
+            />
+          </div>
+          <!-- <div class="form-group">
+            <label for="rate0_1_round_4">Rate for 0 TO 1 CT:</label>
+            <input
+              type="number"
+              class="form-control"
+              id="rate0_1_round_4"
+              value="15000"
+            />
+          </div>
+          <div class="form-group">
+            <label for="rate1_25">Rate for 1 TO 2 CT:</label>
+            <input
+              type="number"
+              class="form-control"
+              id="rate1_25"
+              value="16000"
+            />
+          </div>
+          <div class="form-group">
+            <label for="rate2">Rate for 2 TO 3 CT:</label>
+            <input
+              type="number"
+              class="form-control"
+              id="rate2"
+              value="18000"
+            />
+          </div>
+          <div class="form-group">
+            <label for="rate2_3">Rate for 3 TO 4 CT:</label>
+            <input
+              type="number"
+              class="form-control"
+              id="rate2_3"
+              value="20000"
+            />
+          </div>
+          <div class="form-group">
+            <label for="rate3_1">Rate for 4 TO 5 CT:</label>
+            <input
+              type="number"
+              class="form-control"
+              id="rate3_1"
+              value="22000"
+            /> 
+          </div>-->
+       
+      <button id="updateRates" class="btn btn-primary">Update Rates</button>
+
+      <!-- Results Section -->
+      <div id="result"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script>
+      let rates = {
+        diamond0_80: 10000,
+        diamond0_1_round_4: 12000,
+        diamond1_25: 14000,
+        diamond2: 16000,
+        diamond2_3: 18000,
+        diamond3_1: 20000,
+      };
+
+      $("#updateRates").click(function () {
+        rates.diamond0_80 =
+          parseFloat($("#rate0_80").val()) || rates.diamond0_80;
+        rates.diamond0_1_round_4 =
+          parseFloat($("#rate0_1_round_4").val()) || rates.diamond0_1_round_4;
+        rates.diamond1_25 =
+          parseFloat($("#rate1_25").val()) || rates.diamond1_25;
+        rates.diamond2 = parseFloat($("#rate2").val()) || rates.diamond2;
+        rates.diamond2_3 = parseFloat($("#rate2_3").val()) || rates.diamond2_3;
+        rates.diamond3_1 = parseFloat($("#rate3_1").val()) || rates.diamond3_1;
+
+        alert("Rates updated successfully!");
+      });
+
+      $("#jewelryForm").submit(function (event) {
+        event.preventDefault();
+
+        var metalWeight = parseFloat($("#metalWeight").val()) || 0;
+        var diamond0_80 = parseFloat($("#diamond0_80").val()) || 0;
+        var diamond0_1_round_4 =
+          parseFloat($("#diamond0_1_round_4").val()) || 0;
+        var diamond1_25 = parseFloat($("#diamond1_25").val()) || 0;
+        var diamond2 = parseFloat($("#diamond2").val()) || 0;
+        var diamond2_3 = parseFloat($("#diamond2_3").val()) || 0;
+        var diamond3_1 = parseFloat($("#diamond3_1").val()) || 0;
+
+        var silverConversionRate = metalWeight * 0.76;
+        var gold10kConversionRate = metalWeight * 0.8;
+        var gold14kConversionRate = metalWeight * 0.9;
+        var gold18kConversionRate = metalWeight * 1.0;
+
+        var silverMakingCost =
+          silverConversionRate * 150 +
+          diamond0_80 * rates.diamond0_80 +
+          diamond0_1_round_4 * rates.diamond0_1_round_4 +
+          diamond1_25 * rates.diamond1_25 +
+          diamond2 * rates.diamond2 +
+          diamond2_3 * rates.diamond2_3 +
+          diamond3_1 * rates.diamond3_1 +
+          silverConversionRate * 1000;
+        var gold10kMakingCost =
+          gold10kConversionRate * 4500 +
+          diamond0_80 * rates.diamond0_80 +
+          diamond0_1_round_4 * rates.diamond0_1_round_4 +
+          diamond1_25 * rates.diamond1_25 +
+          diamond2 * rates.diamond2 +
+          diamond2_3 * rates.diamond2_3 +
+          diamond3_1 * rates.diamond3_1 +
+          gold10kConversionRate * 1000;
+        var gold14kMakingCost =
+          gold14kConversionRate * 6500 +
+          diamond0_80 * rates.diamond0_80 +
+          diamond0_1_round_4 * rates.diamond0_1_round_4 +
+          diamond1_25 * rates.diamond1_25 +
+          diamond2 * rates.diamond2 +
+          diamond2_3 * rates.diamond2_3 +
+          diamond3_1 * rates.diamond3_1 +
+          gold14kConversionRate * 1000;
+        var gold18kMakingCost =
+          gold18kConversionRate * 8000 +
+          diamond0_80 * rates.diamond0_80 +
+          diamond0_1_round_4 * rates.diamond0_1_round_4 +
+          diamond1_25 * rates.diamond1_25 +
+          diamond2 * rates.diamond2 +
+          diamond2_3 * rates.diamond2_3 +
+          diamond3_1 * rates.diamond3_1 +
+          gold18kConversionRate * 1000;
+
+        var silverFinalCost = (silverMakingCost * 3) / 80;
+        var gold10kFinalCost = (gold10kMakingCost * 3) / 80;
+        var gold14kFinalCost = (gold14kMakingCost * 3) / 80;
+        var gold18kFinalCost = (gold18kMakingCost * 3) / 80;
+
+        var silverDiscountPrice = (silverMakingCost * 4) / 80;
+        var gold10kDiscountPrice = (gold10kMakingCost * 4) / 80;
+        var gold14kDiscountPrice = (gold14kMakingCost * 4) / 80;
+        var gold18kDiscountPrice = (gold18kMakingCost * 4) / 80;
+
+        $("#result").html(`  
+        <h2>Cost Breakdown</h2>
+        <table class="table table-bordered table-hover transition">
+          <thead class="thead-dark">
+            <tr>
+              <th>Metal Type</th>
+              <th>Making Price</th>
+              <th>Final Price</th>
+              <th>Discount Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Silver</td>
+              <td>${(silverMakingCost / 80).toFixed(2)}</td>
+              <td>${silverFinalCost.toFixed(2)}</td>
+              <td>${silverDiscountPrice.toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td>10K Gold</td>
+              <td>${(gold10kMakingCost / 80).toFixed(2)}</td>
+              <td>${gold10kFinalCost.toFixed(2)}</td>
+              <td>${gold10kDiscountPrice.toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td>14K Gold</td>
+              <td>${(gold14kMakingCost / 80).toFixed(2)}</td>
+              <td>${gold14kFinalCost.toFixed(2)}</td>
+              <td>${gold14kDiscountPrice.toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td>18K Gold</td>
+              <td>${(gold18kMakingCost / 80).toFixed(2)}</td>
+              <td>${gold18kFinalCost.toFixed(2)}</td>
+              <td>${gold18kDiscountPrice.toFixed(2)}</td>
+            </tr>
+          </tbody>
+        </table>
+      `);
+      });
+    </script>
+    <!-- <footer>
+      <p>
+        &copy; 2024 Kirtijewels. All rights reserved. Crafted with care by Deep
+        Gabani
+      </p>
+    </footer> -->
+  </body>
+</html>

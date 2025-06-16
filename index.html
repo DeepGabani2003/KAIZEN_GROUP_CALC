@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaizen Jewelry - Gold Weight Conversion Calculator</title>
+
+    <!-- jQuery and jQuery UI (for animations) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <!-- Bootstrap CSS for responsiveness and styling -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: space-between; /* Ensure footer stays at bottom */
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #000;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #d4af37; /* Gold hover color */
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            margin-top: 40px;
+            animation: fadeIn 1s; /* Add a fade-in effect */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .container select,
+        .container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        .container select:focus,
+        .container input:focus {
+            border-color: #d4af37;
+            outline: none;
+        }
+
+        .container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #d4af37; /* Gold color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .container button:hover {
+            background-color: #b59430; /* Darker gold */
+            transform: scale(1.05);
+        }
+
+        .results {
+            margin-top: 20px;
+        }
+
+        .results p {
+            font-size: 18px;
+            margin: 5px 0;
+            animation: slideIn 0.5s; /* Slide in effect */
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            width: 100%;
+        }
+
+        .loading-spinner {
+            display: none; /* Hidden by default */
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <a href="index.html">Metal WT Conversion</a>
+    <a href="MZ.html">MZ</a>
+    <a href="CVD.html">CVD</a>
+    <a href="Natural.html">Natural</a>
+    <a href="1K.html">1K+ CVD</a>
+    <a href="CAD.html">CAD</a>
+
+</nav>
+
+<div class="container">
+    <h2>Gold Weight Conversion Calculator</h2>
+    <select id="metalType">
+        <option value="10k">10K Gold</option>
+        <option value="14k">14K Gold</option>
+        <option value="18k">18K Gold</option>
+    </select>
+    <input type="number" id="weight" placeholder="Enter Weight in Grams" step="0.01">
+    <button id="convertBtn"><i class="fas fa-calculator"></i> Convert</button>
+
+    <!-- Loading spinner -->
+    <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i> Calculating...
+    </div>
+
+    <div class="results" id="results"></div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Kaizen Jewelry. All rights reserved.</p>
+</footer>
+
+<!-- Bootstrap and jQuery JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Convert Weight with jQuery
+        $('#convertBtn').click(function () {
+            $('.loading-spinner').fadeIn(); // Show loading spinner
+            $('#results').empty(); // Clear previous results
+
+            const metalType = $('#metalType').val();
+            const weight = parseFloat($('#weight').val());
+
+            if (isNaN(weight) || weight <= 0) {
+                $('#results').html("<p>Please enter a valid weight.</p>").hide().fadeIn();
+                $('.loading-spinner').fadeOut(); // Hide spinner
+                return;
+            }
+
+            // AJAX call simulation (normally this could be an actual AJAX request)
+            setTimeout(function () {
+                let result10k, result14k, result18k;
+                let resultsHtml = '';
+
+                if (metalType === "10k") {
+                    result14k = (weight * 1.13).toFixed(2);
+                    result18k = (weight * 1.32).toFixed(2);
+                    resultsHtml = `<p>14K Gold Weight: ${result14k} grams</p><p>18K Gold Weight: ${result18k} grams</p>`;
+                } else if (metalType === "14k") {
+                    result10k = (weight * 0.89).toFixed(2);
+                    result18k = (weight * 1.17).toFixed(2);
+                    resultsHtml = `<p>10K Gold Weight: ${result10k} grams</p><p>18K Gold Weight: ${result18k} grams</p>`;
+                } else if (metalType === "18k") {
+                    result10k = (weight * 0.76).toFixed(2);
+                    result14k = (weight * 0.85).toFixed(2);
+                    resultsHtml = `<p>10K Gold Weight: ${result10k} grams</p><p>14K Gold Weight: ${result14k} grams</p>`;
+                }
+
+                $('#results').html(resultsHtml).hide().fadeIn(); // Show results with fade-in
+                $('.loading-spinner').fadeOut(); // Hide spinner
+            }, 1000); // Simulate a 1 second delay
+        });
+    });
+</script>
+
+</body>
+
+</html>

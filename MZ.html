@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaizen Jewelry - Cost Calculator</title>
+    <style>
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        header img {
+            max-width: 150px;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #000;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: #d4af37;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #d4af37;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #b59430;
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner div {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #d4af37;
+            animation: spin 1.2s infinite ease-in-out;
+        }
+
+        @keyframes spin {
+            0% { transform: scale(0.5); }
+            50% { transform: scale(1); }
+            100% { transform: scale(0.5); }
+        }
+
+        table {
+            width: 90%;
+            margin: 40px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s ease;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s ease;
+        }
+
+        th {
+            background-color: #d4af37;
+            color: #fff;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        footer {
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .form-container, table {
+                width: 95%;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+         <a href="index.html">Metal WT Conversion</a>
+         <a href="MZ.html">MZ</a>
+         <a href="CVD.html">CVD</a>
+	 <a href="Natural.html">Natural</a>
+	 <a href="1K.html">1K+ CVD</a>
+ 	 <a href="CAD.html">CAD</a>
+
+    </nav>
+
+    <header>
+        
+        <h1>Kaizen Jewelry Cost Calculator</h1>
+    </header>
+
+    <div class="container">
+        <div class="form-container">
+            <form id="jewelryForm">
+                <label for="metalWeight">Metal Weight (grams):</label>
+                <input type="number" id="metalWeight" name="metalWeight" required>
+
+                <label for="roundDiamondWeight">Round Diamond Weight (carats):</label>
+                <input type="number" id="roundDiamondWeight" name="roundDiamondWeight" required>
+
+                <label for="fancyDiamondWeight">Fancy Diamond Weight (carats):</label>
+                <input type="number" id="fancyDiamondWeight" name="fancyDiamondWeight" required>
+
+                <button type="button" onclick="calculateCosts()">Calculate</button>
+            </form>
+            <div id="spinner" class="spinner"><div></div></div>
+        </div>
+
+        <h2 style="text-align:center; color:#333;">MZ Diamond Costs</h2>
+        <table id="costTable">
+            <thead>
+                <tr>
+                    <th>Metal Type</th>
+                    <th>Making Cost (USD)</th>
+                    <th>Final Price (USD)</th>
+                    <th>Discount Price (USD)</th>
+                </tr>
+            </thead>
+            <tbody id="mzCosts"></tbody>
+        </table>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Kaizen Jewelry. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const prices = {
+            silver: 120,
+            gold10k: 4500,
+            gold14k: 6500,
+            gold18k: 8000,
+            labour: 1000,
+            mzRoundDiamond: 700,
+            mzFancyDiamond: 1000,
+            exchangeRate: 80 // 1 USD = 80 INR
+        };
+
+        function calculateMakingCost(metal, metalWeight, roundDiamondWeight, fancyDiamondWeight) {
+            const conversionRate = getConversionRate(metal, metalWeight);
+            const metalPrice = prices[metal];
+            const diamondPrice = prices.mzRoundDiamond;
+            const fancyDiamondPrice = prices.mzFancyDiamond;
+            const labour = prices.labour;
+
+            return (conversionRate * metalPrice) + (roundDiamondWeight * diamondPrice) + (fancyDiamondWeight * fancyDiamondPrice) + (conversionRate * labour);
+        }
+
+        function calculateCosts() {
+            document.getElementById('spinner').style.display = 'block'; // Show spinner
+
+            setTimeout(() => { // Simulate a delay for the calculation
+                const metalWeight = parseFloat(document.getElementById('metalWeight').value);
+                const roundDiamondWeight = parseFloat(document.getElementById('roundDiamondWeight').value);
+                const fancyDiamondWeight = parseFloat(document.getElementById('fancyDiamondWeight').value);
+
+                const metals = ['silver', 'gold10k', 'gold14k', 'gold18k'];
+                const mzCosts = document.getElementById('mzCosts');
+                const costTable = document.getElementById('costTable');
+
+                mzCosts.innerHTML = '';
+
+                metals.forEach(metal => {
+                    const mzMakingCost = calculateMakingCost(metal, metalWeight, roundDiamondWeight, fancyDiamondWeight);
+                    let mzFinalCost, mzDiscountCost;
+                    switch (metal) {
+                        case 'silver':
+                            mzFinalCost = (mzMakingCost * 4.5) / 80;
+                            mzDiscountCost = (mzMakingCost * 6) / 80 + 15;
+                            break;
+                        case 'gold10k':
+                            mzFinalCost = (mzMakingCost * 3) / 80;
+                            mzDiscountCost = (mzMakingCost * 4) / 80 + 20;
+                            break;
+                        case 'gold14k':
+                            mzFinalCost = (mzMakingCost * 3) / 80;
+                            mzDiscountCost = (mzMakingCost * 4) / 80 + 40;
+                            break;
+                        case 'gold18k':
+                            mzFinalCost = (mzMakingCost * 3) / 80;
+                            mzDiscountCost = (mzMakingCost * 4) / 80 + 40;
+                            break;
+                    }
+
+                    mzCosts.innerHTML += `<tr>
+                        <td>${metal}</td>
+                        <td>${(mzMakingCost / prices.exchangeRate).toFixed(2)}</td>
+                        <td>${(mzFinalCost).toFixed(2)}</td>
+                        <td>${(mzDiscountCost).toFixed(2)}</td>
+                    </tr>`;
+                });
+
+                document.getElementById('spinner').style.display = 'none'; // Hide spinner
+            }, 500); // 0.5 second delay
+        }
+
+        function getConversionRate(metal, metalWeight) {
+            switch(metal) {
+                case 'silver':
+                    return metalWeight * 1;
+                case 'gold10k':
+                    return metalWeight * 1;
+                case 'gold14k':
+                    return metalWeight * 1;
+                case 'gold18k':
+                    return metalWeight * 1;
+                default:
+                    return 0;
+            }
+        }
+    </script>
+</body>
+</html>
